@@ -6,7 +6,7 @@
       <class name="Mytestcases">
         <methods>
           <include name="MySetup"/>
-          <include name="DynamicDropDown"/>
+          <include name="switcALERT"/>
         </methods>
       </class> <!-- Mytestcases -->
     </classes>

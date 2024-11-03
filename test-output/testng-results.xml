@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="2" total="3" passed="1" failed="0" skipped="0">
+<testng-results ignored="11" total="13" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-10-30T21:43:12 EET" name="Default suite" finished-at="2024-10-30T21:43:20 EET" duration-ms="7577">
+  <suite started-at="2024-11-03T21:52:56 EET" name="Default suite" finished-at="2024-11-03T21:53:13 EET" duration-ms="17278">
     <groups>
     </groups>
-    <test started-at="2024-10-30T21:43:12 EET" name="Default test" finished-at="2024-10-30T21:43:20 EET" duration-ms="7577">
+    <test started-at="2024-11-03T21:52:56 EET" name="Default test" finished-at="2024-11-03T21:53:13 EET" duration-ms="17278">
       <class name="Mytestcases">
-        <test-method is-config="true" signature="MySetup()[pri:0, instance:Mytestcases@7103cb56]" started-at="2024-10-30T21:43:12 EET" name="MySetup" finished-at="2024-10-30T21:43:20 EET" duration-ms="7371" status="PASS">
+        <test-method is-config="true" signature="MySetup()[pri:0, instance:Mytestcases@39a8312f]" started-at="2024-11-03T21:52:56 EET" name="MySetup" finished-at="2024-11-03T21:53:09 EET" duration-ms="12961" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- MySetup -->
-        <test-method signature="SelectTag()[pri:3, instance:Mytestcases@7103cb56]" started-at="2024-10-30T21:43:20 EET" name="SelectTag" finished-at="2024-10-30T21:43:20 EET" duration-ms="181" status="PASS">
+        <test-method signature="Enabled_Disabled()[pri:10, instance:Mytestcases@39a8312f]" started-at="2024-11-03T21:53:09 EET" name="Enabled_Disabled" finished-at="2024-11-03T21:53:09 EET" duration-ms="175" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- SelectTag -->
+        </test-method> <!-- Enabled_Disabled -->
+        <test-method signature="MouseHover()[pri:11, instance:Mytestcases@39a8312f]" started-at="2024-11-03T21:53:09 EET" name="MouseHover" finished-at="2024-11-03T21:53:13 EET" duration-ms="4110" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MouseHover -->
       </class> <!-- Mytestcases -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
