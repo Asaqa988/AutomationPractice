@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="11" total="13" passed="2" failed="0" skipped="0">
+<testng-results ignored="12" total="13" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-11-03T21:52:56 EET" name="Default suite" finished-at="2024-11-03T21:53:13 EET" duration-ms="17278">
+  <suite started-at="2024-11-04T21:11:29 EET" name="Default suite" finished-at="2024-11-04T21:11:44 EET" duration-ms="15295">
     <groups>
     </groups>
-    <test started-at="2024-11-03T21:52:56 EET" name="Default test" finished-at="2024-11-03T21:53:13 EET" duration-ms="17278">
+    <test started-at="2024-11-04T21:11:29 EET" name="Default test" finished-at="2024-11-04T21:11:44 EET" duration-ms="15295">
       <class name="Mytestcases">
-        <test-method is-config="true" signature="MySetup()[pri:0, instance:Mytestcases@39a8312f]" started-at="2024-11-03T21:52:56 EET" name="MySetup" finished-at="2024-11-03T21:53:09 EET" duration-ms="12961" status="PASS">
+        <test-method is-config="true" signature="MySetup()[pri:0, instance:Mytestcases@39a8312f]" started-at="2024-11-04T21:11:29 EET" name="MySetup" finished-at="2024-11-04T21:11:36 EET" duration-ms="6973" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- MySetup -->
-        <test-method signature="Enabled_Disabled()[pri:10, instance:Mytestcases@39a8312f]" started-at="2024-11-03T21:53:09 EET" name="Enabled_Disabled" finished-at="2024-11-03T21:53:09 EET" duration-ms="175" status="PASS">
+        <test-method signature="iFrame()[pri:13, instance:Mytestcases@39a8312f]" started-at="2024-11-04T21:11:36 EET" name="iFrame" finished-at="2024-11-04T21:11:44 EET" duration-ms="8302" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Enabled_Disabled -->
-        <test-method signature="MouseHover()[pri:11, instance:Mytestcases@39a8312f]" started-at="2024-11-03T21:53:09 EET" name="MouseHover" finished-at="2024-11-03T21:53:13 EET" duration-ms="4110" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- MouseHover -->
+        </test-method> <!-- iFrame -->
       </class> <!-- Mytestcases -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

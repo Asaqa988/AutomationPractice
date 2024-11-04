@@ -229,7 +229,7 @@ public class Mytestcases {
 
 	}
 
-	@Test(priority = 10, enabled = true)
+	@Test(priority = 10, enabled = false)
 	public void Enabled_Disabled() {
 
 		WebElement DisableButton = driver.findElement(By.id("disabled-button"));
@@ -252,7 +252,7 @@ public class Mytestcases {
 
 	}
 
-	@Test(priority = 11, enabled = true)
+	@Test(priority = 11, enabled = false)
 	public void MouseHover() {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -266,16 +266,77 @@ public class Mytestcases {
 		;
 
 		driver.findElement(By.linkText("Reload")).click();
-		;
 
-	}
-
-	@Test(priority = 11, enabled = false)
-	public void Calendar() {
 	}
 
 	@Test(priority = 12, enabled = false)
-	public void iFrame() {
+	public void Calendar() throws InterruptedException {
+
+		driver.findElement(By.linkText("Booking Calendar")).click();
+
+		List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
+
+		driver.switchTo().window(windowHandles.get(1));
+
+		Thread.sleep(3000);
+		;
+
+		// this is the correct solution - the problem is when you try this you will get
+		// error says stale element not found ( the develope is not using react or any
+		// modern framework )
+		// the modern Framework applies the SPA single page application
+
+		// List<WebElement> AvailableDate=
+		// driver.findElements(By.xpath("//a[@href='javascript:void(0)']"));
+
+//		System.out.println(AvailableDate.size());
+
+		// this is not a good solution because i have to repeat the code as much as
+		// avaliable times are there
+
+//		AvailableDate.get(1).click();
+//		AvailableDate.get(2).click();
+//		AvailableDate.get(3).click();
+
+		// this will solve the problem of stale element not found but also is not a
+		// correct one why because the list
+		// will get declared تعرف
+		// 25 times each time
+		for (int i = 1; i < 25; i++) {
+			List<WebElement> AvailableDate = driver.findElements(By.xpath("//a[@href='javascript:void(0)']"));
+
+			AvailableDate.get(i).click();
+			Thread.sleep(1000);
+			;
+
+		}
+
+	}
+
+	@Test(priority = 13, enabled = true)
+	public void iFrame() throws InterruptedException {
+		JavascriptExecutor js = (JavascriptExecutor)driver ; 
+		
+		js.executeScript("window.scrollTo(0,2400)");
+		
+	WebElement myFrame = 	driver.findElement(By.id("courses-iframe"));
+	
+	
+	Thread.sleep(3000);
+	driver.switchTo().frame(myFrame);
+	js.executeScript("window.scrollTo(0,1100)");
+
+	
+	String myText =driver.findElement(By.xpath("//*[@id=\"ct_heading-1b594e8\"]/div/h3/span")).getText();
+	
+	System.out.println(myText);
+	
+	Thread.sleep(3000);
+	driver.findElement(By.xpath("//*[@id=\"ct_button-20c391b5\"]/a/span[2]")).click();
+	Thread.sleep(2000);
+	
+	driver.findElement(By.xpath("//*[@id=\"ct-pagetitle\"]/div/ul/li[1]/a")).click();
+
 	}
 
 }

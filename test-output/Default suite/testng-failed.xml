@@ -6,7 +6,7 @@
       <class name="Mytestcases">
         <methods>
           <include name="MySetup"/>
-          <include name="switcALERT"/>
+          <include name="iFrame"/>
         </methods>
       </class> <!-- Mytestcases -->
     </classes>
