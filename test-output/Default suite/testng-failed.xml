@@ -5,8 +5,8 @@
     <classes>
       <class name="Mytestcases">
         <methods>
-          <include name="MySetup"/>
-          <include name="iFrame"/>
+          <include name="mySetup"/>
+          <include name="Dynamic_Dropdown_Example"/>
         </methods>
       </class> <!-- Mytestcases -->
     </classes>

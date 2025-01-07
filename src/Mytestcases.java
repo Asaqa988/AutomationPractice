@@ -2,6 +2,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.nio.channels.Selector;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,327 +17,244 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class Mytestcases {
 
 	WebDriver driver = new ChromeDriver();
 
-	String website = "https://codenboxautomationlab.com/practice/";
+	String WebSite = "https://codenboxautomationlab.com/practice/";
 
 	Random rand = new Random();
 
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+
 	@BeforeTest
-	public void MySetup() {
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+	public void mySetup() {
+
 		driver.manage().window().maximize();
-		driver.get(website);
+		driver.get(WebSite);
 	}
 
-	@Test(priority = 1, enabled = false)
-	public void RadioButtons() {
+	@Test(priority = 1, description = "Radio button", invocationCount = 1, enabled = false)
 
-		// select one random radio button
+	public void Radio_Button_Example() throws InterruptedException {
 
-		WebElement divForRadio = driver.findElement(By.id("radio-btn-example"));
-		divForRadio.findElements(By.tagName("input"));
+		List<WebElement> AllRadioButtons = driver.findElements(By.className("radioButton"));
+		// to click on the first item
+//AllRadioButtons.get(0).click();	
 
-		int RandomIndex = rand.nextInt(divForRadio.findElements(By.tagName("input")).size());
+		int randomIndex = rand.nextInt(AllRadioButtons.size()); // size is 3 so it it will generate 0,1,2
+		AllRadioButtons.get(randomIndex).click();
 
-		WebElement SelectedInput = divForRadio.findElements(By.tagName("input")).get(RandomIndex);
+		// this is new code for test 1
+		boolean expectedddddddddddResult = true;
+		boolean ActualResult = AllRadioButtons.get(randomIndex).isSelected();
 
-		SelectedInput.click();
+		Assert.assertEquals(ActualResult, expectedddddddddddResult);
 
-		boolean ActualResult = SelectedInput.isSelected();
+		// l3yon mahdi
+
+		for (int i = 0; i < AllRadioButtons.size(); i++) {
+			Thread.sleep(1000);
+			AllRadioButtons.get(i).click();
+		}
+	}
+
+	@Test(priority = 2, description = "dropDown Dynamic", enabled = false)
+	public void Dynamic_Dropdown_Example() throws InterruptedException {
+
+		// generate random String in a static way because i dont need my test to include
+		// any other data
+		String[] countryCodes = { "US", "CA", "OM", "BR", "AR", "FR", "DE", "IT", "ES", "AM" };
+
+		// random index based on the length of the above array
+
+		int randomIndex = rand.nextInt(countryCodes.length);
+
+// webelement to the input field ( country)  
+		WebElement DynamicListInput = driver.findElement(By.id("autocomplete"));
+
+		// send an random item from my array to the webelement (inputfield)
+		DynamicListInput.sendKeys(countryCodes[randomIndex]);
+
+		Thread.sleep(1000);
+
+		// it will press an arrow down + enter to select the first item from the list
+		DynamicListInput.sendKeys(Keys.chord(Keys.ARROW_DOWN, Keys.ENTER));
+
+// i need to capture or take the country name that selenum already selected 
+		String DataInsideMyInput = (String) js.executeScript("return arguments[0].value", DynamicListInput);
+
+		// the country name for example United Arab Emirates contains capital letters
+		// and small ones
+		// so what i did i make all the letters in small ( for example France , and
+		// South Africa look at the 'fr and Fr'
+		String updateDataInMyInput = DataInsideMyInput.toUpperCase();
+
+		boolean ActualValue = updateDataInMyInput.contains(countryCodes[randomIndex].toUpperCase());
+
 		boolean ExpectedResult = true;
 
-		Assert.assertEquals(ActualResult, ExpectedResult);
+		Assert.assertEquals(ActualValue, ExpectedResult);
 
 	}
 
-	@Test(priority = 2, enabled = false)
-	public void DynamicDropDown() throws InterruptedException {
+	@Test(priority = 3, description = "static dropdown list", enabled = false)
+	public void Static_Dropdown_Example() {
+		WebElement SelectElement = driver.findElement(By.id("dropdown-class-example"));
+		Select sel = new Select(SelectElement);
 
-		String[] myRandomTwoCharacter = { "AB", "EA", "GH", "IJ", "KL", "MO", "OP" };
+		 sel.selectByIndex(3);
+		// sel.selectByValue("option2");
+		// sel.selectByVisibleText("API");
 
-		int randomIndex = rand.nextInt(myRandomTwoCharacter.length);
-		String myInputdata = myRandomTwoCharacter[randomIndex];
+	}
 
-		WebElement autocompleteInput = driver.findElement(By.id("autocomplete"));
-
-		autocompleteInput.sendKeys(myInputdata);
+	@Test(priority = 4, description = "check box example", enabled = true)
+	public void Checkbox_Example() throws InterruptedException {
+		List<WebElement> CheckBoxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
+		int randomIndex = rand.nextInt(CheckBoxes.size());
+		System.out.println(CheckBoxes.size());
 		Thread.sleep(1000);
-		autocompleteInput.sendKeys(Keys.chord(Keys.ARROW_DOWN, Keys.ENTER));
+		// CheckBoxes.getFirst().click();
+		// CheckBoxes.getLast().click();
+		// CheckBoxes.get(96).click();
 
-		JavascriptExecutor js = (JavascriptExecutor) driver;
+		// CheckBoxes.get(randomIndex).click();
 
-		String DataInsideMyInput = (String) js.executeScript("return arguments[0].value", autocompleteInput);
-
-		String updatedData = DataInsideMyInput.toLowerCase();
-		boolean ActualResult = updatedData.contains(myInputdata.toLowerCase());
-
-		System.out.println(updatedData);
-		System.out.println(myInputdata.toLowerCase());
-		Assert.assertEquals(ActualResult, true);
-
-	}
-
-	@Test(priority = 3, enabled = false)
-	public void SelectTag() {
-
-		WebElement mySelectelement = driver.findElement(By.id("dropdown-class-example"));
-
-		Select selctor = new Select(mySelectelement);
-
-		int randomIndex = rand.nextInt(1, 4);
-
-//		selctor.selectByVisibleText("API");
-//		selctor.selectByValue("option2");
-		selctor.selectByIndex(randomIndex);
-	}
-
-	@Test(priority = 4, enabled = false)
-	public void Checkbox() {
-		WebElement divForThecheckBox = driver.findElement(By.id("checkbox-example"));
-
-		List<WebElement> myCheckBox = divForThecheckBox.findElements(By.xpath("//input[@type='checkbox']"));
-
-		for (int i = 0; i < myCheckBox.size(); i++) {
-
-			myCheckBox.get(i).click();
+		// to select them all
+		for (int i = 0; i < CheckBoxes.size(); i++) {
+			CheckBoxes.get(i).click();
+			boolean ActaualResult = CheckBoxes.get(i).isSelected();
+			boolean expectedResult = true ; 
+			
+			Assert.assertEquals(ActaualResult, expectedResult); 
+			
 		}
+	
+
+		
+		
+	}
+
+	@Test(priority = 5, description = "this is to move from window to another one", enabled = false)
+	public void Switch_Window_Example() throws InterruptedException {
+
+		WebElement OpenWindowButton = driver.findElement(By.id("openwindow"));
+		OpenWindowButton.click();
+		Thread.sleep(2000);
+		List<String> windowsHandels = new ArrayList<String>(driver.getWindowHandles());
+		// number of opened windows
+		System.out.println(windowsHandels.size());
+// switch to the other window 
+		driver.switchTo().window(windowsHandels.get(1));
+		// in the second window
+		WebElement ContactButton = driver.findElement(By.id("menu-item-9680"));
+		ContactButton.click();
+
+		System.out.println(driver.getTitle() + " hello from the second window");
+
+		driver.close();
+		// switch to the first window
+		driver.switchTo().window(windowsHandels.get(0));
 
 	}
 
-	@Test(priority = 5, enabled = false)
-	public void switchWindows() throws InterruptedException {
+	@Test(priority = 6, description = "check moving to another tab", enabled = false)
 
-		driver.findElement(By.id("openwindow")).click();
+	public void Switch_Tab_Example() throws InterruptedException {
+		WebElement OpenTabButton = driver.findElement(By.id("opentab"));
+
+		OpenTabButton.click();
+
+		List<String> windowsHandels = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(windowsHandels.get(1));
+		Thread.sleep(2000);
+		System.out.println(driver.getTitle());
+	}
+
+	@Test(priority = 7, description = "Alert and confirm", enabled = false)
+	public void Switch_To_Alert_Example() throws InterruptedException {
+		WebElement nameBox = driver.findElement(By.id("name"));
+		nameBox.sendKeys("abedalraheem");
+		// WebElement AlertBox = driver.findElement(By.id("alertbtn"));
+		// AlertBox.click();
+
 		Thread.sleep(1000);
-		List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
-
-		driver.switchTo().window(windowHandles.get(1));
-		Thread.sleep(3000);
-
-		driver.findElement(By.xpath("//*[@id=\"menu-item-9675\"]/a/span[1]")).click();
-
-		// get back to the main webdriver the first chrome browswe
-		driver.switchTo().window(windowHandles.get(0));
-
-		Thread.sleep(3000);
-
-		WebElement divForThecheckBox = driver.findElement(By.id("checkbox-example"));
-
-		List<WebElement> myCheckBox = divForThecheckBox.findElements(By.xpath("//input[@type='checkbox']"));
-
-		for (int i = 0; i < myCheckBox.size(); i++) {
-
-			myCheckBox.get(i).click();
-		}
-
-	}
-
-	@Test(priority = 6, enabled = false)
-	public void switchTABS() throws InterruptedException {
-
-		driver.findElement(By.id("opentab")).click();
-
-		List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
-
-		driver.switchTo().window(windowHandles.get(1));
-		Thread.sleep(3000);
-
-		String ActualValue = driver.getTitle();
-
-		String expectedValue = "Codenbox AutomationLab - YouTube";
-
-		Assert.assertEquals(ActualValue, expectedValue);
-
-	}
-
-	@Test(priority = 7, enabled = false)
-	public void switcALERT() throws InterruptedException {
-
-		// ****************** alert normal ***********************
-
-		// driver.findElement(By.id("alertbtn")).click();
-
-		// Thread.sleep(2000);
 		// driver.switchTo().alert().accept();
-
-		// ******************confirm alert*********************
-
-		// to dismiss the confirm alert ( to cancel it )
 		// driver.switchTo().alert().dismiss();
 
-		// to accept the alert ( and send the information for example my name that
-		// inside the box)
-		driver.findElement(By.id("name")).sendKeys("ahmad");
+		WebElement ConfirmBox = driver.findElement(By.id("confirmbtn"));
+		ConfirmBox.click();
+		Thread.sleep(1000);
+		// driver.switchTo().alert().accept();
+		// driver.switchTo().alert().dismiss();
 
-		driver.findElement(By.id("confirmbtn")).click();
-		Thread.sleep(2000);
-
-		boolean ActualResult = driver.switchTo().alert().getText().contains("ahmad");
-		boolean expectedResult = true;
-
-		Assert.assertEquals(ActualResult, expectedResult);
-		driver.switchTo().alert().accept();
-
+		// System.out.println(driver.switchTo().alert().getText());
 	}
 
-	@Test(priority = 8, enabled = false)
-	public void TableExample() {
+	@Test(priority = 8, description = " play with the data of the column ", enabled = false)
 
-		WebElement theTable = driver.findElement(By.id("product"));
+	public void Web_Table_Example() {
 
-		;
-		List<WebElement> allCoursesList = theTable.findElements(By.tagName("td"));
+		WebElement TheTable = driver.findElement(By.id("product"));
 
-		String myString = theTable.findElements(By.tagName("td")).get(0).getText();
-		System.out.println();
+		List<WebElement> theDataInsideTheTable = TheTable.findElements(By.tagName("tr"));
 
-		driver.findElement(By.id("name")).sendKeys(myString);
+		for (int i = 1; i < theDataInsideTheTable.size(); i++) {
 
-		for (int i = 1; i < allCoursesList.size(); i = i + 3) {
-			System.out.println(allCoursesList.get(i).getText());
+			int totalTdInTheRow = theDataInsideTheTable.get(i).findElements(By.tagName("td")).size();
+
+			System.out.println(
+					theDataInsideTheTable.get(i).findElements(By.tagName("td")).get(totalTdInTheRow - 1).getText());
 		}
 
 	}
 
-	@Test(priority = 9, enabled = false)
-	public void ElementDisplayed() throws InterruptedException {
+	@Test(priority = 9, description = "this is to test hide and show buttons", enabled = false)
+	public void Element_Displayed_Example() throws InterruptedException {
 
-		// hide element
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		SoftAssert myAssertion = new SoftAssert();
+
+		// softassert if one test failed it will continue to the rest of the code
+
+		// hardassert once failed it will stop all the execution
+
+		js.executeScript("window.scrollTo(0,1500)");
 
 		WebElement HideButton = driver.findElement(By.id("hide-textbox"));
+		WebElement ShowButton = driver.findElement(By.id("show-textbox"));
+
 		HideButton.click();
 
-		WebElement TheElementThatWeWantToHide = driver.findElement(By.id("displayed-text"));
+		WebElement theTEXXXXXTINPUT = driver.findElement(By.id("displayed-text"));
 
-		boolean ActualResult = TheElementThatWeWantToHide.isDisplayed();
-		boolean ExpectedResult = false;
+		// hard assert
 
-		Assert.assertEquals(ActualResult, ExpectedResult);
+		// Assert.assertEquals(theTEXXXXXTINPUT.isDisplayed(), true);
 
-		Thread.sleep(2000);
+		myAssertion.assertEquals(theTEXXXXXTINPUT.isDisplayed(), false);
 
-		WebElement ShowButton = driver.findElement(By.id("show-textbox"));
+		Thread.sleep(4000);
 		ShowButton.click();
-		boolean ActualResult2 = TheElementThatWeWantToHide.isDisplayed();
-		boolean ExpectedResult2 = true;
-		Assert.assertEquals(ActualResult2, ExpectedResult2);
+		Assert.assertEquals(theTEXXXXXTINPUT.isDisplayed(), true);
 
+		myAssertion.assertAll();
 	}
 
 	@Test(priority = 10, enabled = false)
-	public void Enabled_Disabled() {
 
-		WebElement DisableButton = driver.findElement(By.id("disabled-button"));
-		DisableButton.click();
+	public void CheckTheTitle() {
+		String expected = "Automation Practice - CodenBox AutomationLab";
 
-		WebElement TheelementThatWeNeedToDisable = driver.findElement(By.id("enabled-example-input"));
+		String ActualTitle = driver.getTitle();
 
-		boolean ActualResult = TheelementThatWeNeedToDisable.isEnabled();
-		boolean ExpectedResult = false;
-
-		Assert.assertEquals(ActualResult, ExpectedResult);
-
-		WebElement EnableButton = driver.findElement(By.id("enabled-button"));
-
-		EnableButton.click();
-		boolean ActualResult2 = TheelementThatWeNeedToDisable.isEnabled();
-
-		boolean ExpectedResult2 = true;
-		Assert.assertEquals(ActualResult2, ExpectedResult2);
-
-	}
-
-	@Test(priority = 11, enabled = false)
-	public void MouseHover() {
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		js.executeScript("window.scrollTo(0,1750)");
-
-		Actions action = new Actions(driver);
-
-		WebElement Thetarget = driver.findElement(By.id("mousehover"));
-		action.moveToElement(Thetarget).perform();
-		;
-
-		driver.findElement(By.linkText("Reload")).click();
-
-	}
-
-	@Test(priority = 12, enabled = false)
-	public void Calendar() throws InterruptedException {
-
-		driver.findElement(By.linkText("Booking Calendar")).click();
-
-		List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
-
-		driver.switchTo().window(windowHandles.get(1));
-
-		Thread.sleep(3000);
-		;
-
-		// this is the correct solution - the problem is when you try this you will get
-		// error says stale element not found ( the develope is not using react or any
-		// modern framework )
-		// the modern Framework applies the SPA single page application
-
-		// List<WebElement> AvailableDate=
-		// driver.findElements(By.xpath("//a[@href='javascript:void(0)']"));
-
-//		System.out.println(AvailableDate.size());
-
-		// this is not a good solution because i have to repeat the code as much as
-		// avaliable times are there
-
-//		AvailableDate.get(1).click();
-//		AvailableDate.get(2).click();
-//		AvailableDate.get(3).click();
-
-		// this will solve the problem of stale element not found but also is not a
-		// correct one why because the list
-		// will get declared تعرف
-		// 25 times each time
-		for (int i = 1; i < 25; i++) {
-			List<WebElement> AvailableDate = driver.findElements(By.xpath("//a[@href='javascript:void(0)']"));
-
-			AvailableDate.get(i).click();
-			Thread.sleep(1000);
-			;
-
-		}
-
-	}
-
-	@Test(priority = 13, enabled = true)
-	public void iFrame() throws InterruptedException {
-		JavascriptExecutor js = (JavascriptExecutor)driver ; 
-		
-		js.executeScript("window.scrollTo(0,2400)");
-		
-	WebElement myFrame = 	driver.findElement(By.id("courses-iframe"));
-	
-	
-	Thread.sleep(3000);
-	driver.switchTo().frame(myFrame);
-	js.executeScript("window.scrollTo(0,1100)");
-
-	
-	String myText =driver.findElement(By.xpath("//*[@id=\"ct_heading-1b594e8\"]/div/h3/span")).getText();
-	
-	System.out.println(myText);
-	
-	Thread.sleep(3000);
-	driver.findElement(By.xpath("//*[@id=\"ct_button-20c391b5\"]/a/span[2]")).click();
-	Thread.sleep(2000);
-	
-	driver.findElement(By.xpath("//*[@id=\"ct-pagetitle\"]/div/ul/li[1]/a")).click();
-
+		Assert.assertEquals(ActualTitle, expected);
 	}
 
 }

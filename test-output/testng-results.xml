@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="12" total="13" passed="1" failed="0" skipped="0">
+<testng-results ignored="9" total="10" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-11-04T21:11:29 EET" name="Default suite" finished-at="2024-11-04T21:11:44 EET" duration-ms="15295">
+  <suite started-at="2025-01-07T21:42:27 GMT+03:00" name="Default suite" finished-at="2025-01-07T21:42:46 GMT+03:00" duration-ms="19545">
     <groups>
     </groups>
-    <test started-at="2024-11-04T21:11:29 EET" name="Default test" finished-at="2024-11-04T21:11:44 EET" duration-ms="15295">
+    <test started-at="2025-01-07T21:42:27 GMT+03:00" name="Default test" finished-at="2025-01-07T21:42:46 GMT+03:00" duration-ms="19545">
       <class name="Mytestcases">
-        <test-method is-config="true" signature="MySetup()[pri:0, instance:Mytestcases@39a8312f]" started-at="2024-11-04T21:11:29 EET" name="MySetup" finished-at="2024-11-04T21:11:36 EET" duration-ms="6973" status="PASS">
+        <test-method is-config="true" signature="mySetup()[pri:0, instance:Mytestcases@5cbe877d]" started-at="2025-01-07T21:42:27 GMT+03:00" name="mySetup" finished-at="2025-01-07T21:42:44 GMT+03:00" duration-ms="17858" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- MySetup -->
-        <test-method signature="iFrame()[pri:13, instance:Mytestcases@39a8312f]" started-at="2024-11-04T21:11:36 EET" name="iFrame" finished-at="2024-11-04T21:11:44 EET" duration-ms="8302" status="PASS">
+        </test-method> <!-- mySetup -->
+        <test-method signature="Checkbox_Example()[pri:4, instance:Mytestcases@5cbe877d]" started-at="2025-01-07T21:42:44 GMT+03:00" name="Checkbox_Example" description="check box example" finished-at="2025-01-07T21:42:46 GMT+03:00" duration-ms="1660" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- iFrame -->
+        </test-method> <!-- Checkbox_Example -->
       </class> <!-- Mytestcases -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
